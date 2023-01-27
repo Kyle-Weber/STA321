@@ -1,0 +1,52 @@
+---
+title: "kyle"
+output: html_document
+date: "2023-01-25"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+# how to write mathematical formulas in Rmarkdown 
+
+inline equaiton, $x^2+/sqrt{x+1} = 0$
+the theoretical formula for linear regression is given by,  
+$$
+y= \alpha_0 + \alpha_1 x_1 + \cdots+\alpha_k x_k + \epsilon.
+$$
+Data Structure
+$y= \{ y_1, y_2, \cdots, y_n \}$
+
+$x_1 = \{x_{1,1}, x_{1,2} \}$
+
+$x^2{(0)}_{2,3}      $
+
+#sum and product
+$$
+L(\mu, \sigma)=\prod_{i=1}^n \frac{1}{\sqrt{2\pi}}e^{-\frac{(x_i-\mu)^2}{2\sigma^2}}
+$$
+The log likelihood is given by
+$$
+l(\mu,\sigma)= \sum_{i=1}^n \log \left(\frac{1}{\sqrt{2\pi}}e^{-\frac{(x_i-\mu)^2}{2\sigma^2}}\right)
+$$
