@@ -1,0 +1,69 @@
+---
+title: "321HW1"
+output:
+  html_document: default
+  pdf_document: default
+date: "2023-02-03"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r}
+#install.packages("knit()")
+library(kableExtra)
+``` 
+
+```{r}
+protein = read.csv("https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-Protein_Supply_Quantity_Data.csv", 
+                   header = TRUE)
+var.name = names(protein)
+kable(data.frame(var.name))
+
+#Question 2: the variable that I will be using for this assignment is Spices. Spces make up a fairly small percentage of the amount of protein intake from different countries
+
+```
+
+```{r}
+#Question 3 Confidence Interval of the mean of Spice
+l.model <- lm(Spices ~ 1, protein)
+confint(l.model, level=0.95)
+
+```
+
+```{r}
+#Question 4, Bootstrap confidence interval
+protein = read.csv("https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/w02-Protein_Supply_Quantity_Data.csv", header = TRUE)
+original.sample = sample(protein$Spices,    
+                       170,                      
+                       replace = FALSE         
+                 )                              
+bt.sample.mean.vec = NULL      
+for(i in 1:170){              
+  ith.bt.sample = sample( original.sample,    
+                       170,                    
+                       replace = TRUE         
+                 )                            
+  bt.sample.mean.vec[i] = mean(ith.bt.sample)  
+                                               
+  }
+CI = quantile(bt.sample.mean.vec, c(0.025, 0.975))
+CI
+
+
+```
+
+```{r}
+#Question 5, bootstrap sampling distribution of the sample mean
+hist(bt.sample.mean.vec,                                        
+     breaks = 14,                                                
+     xlab = "Bootstrap sample means",                            
+     main="Bootstrap Sampling Distribution \n of Sample Means") 
+
+#Question 6, Comparing the two confidence intervals:
+# The confidence interval of the mean of Spice is (0.1820222, 0.2815825) while the bootstrapped confidence interval is (0.1872804 0.2766312). The two confidence intervals are almost identical to each other, showing that the bootstrap performed is valid. The comparison is meant to verify that the bootstrap population is a valid population. Interpreting the confidence intervals themselves, it means that with 97.5% confidence the population mean would fall between (0.1820222, 0.2815825) for the sample mean of the Spice, and (0.1872804 0.2766312) for the bootstrap confidence interval. 
+
+
+```
+
