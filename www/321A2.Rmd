@@ -1,0 +1,92 @@
+---
+title: "Untitled"
+output: html_document
+date: "2023-02-12"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# 3.1 Questions
+# The data was collected by A.H. Schaff in 1996 by gathering home mortgage yieds for 18 SMSA's and six financial factors. The variables for the data set are smsa, MortYld, X1, X2, X3, X4, X5, and X6. The practical and analytical question are listed in section 3.2. This data set should have enough data to answer all of the following questions. 
+
+```
+
+
+```{r}
+#Question 1)
+#X1 or new units built is the explanatory variable while X3 or the average mortgage ratio is the response variable. There is a weak negative linear correlation between new units and the average mortgage ratio.
+
+
+myield_1_ = read.csv("https://users.stat.ufl.edu/~winner/data/myield.csv", header = TRUE)
+myield_1_ <- myield_1_ [, -1]
+NewUnit <- myield_1_ $X3
+AverageMortgage <- myield_1_ $X1
+
+plot(AverageMortgage, NewUnit, main = "Home Mortgage Rates")
+pairs(myield_1_ , main ="Pair-wise Association: Scatter Plot")
+
+```
+
+```{r}
+residual<- rnorm(70, 0, 5)  
+plot(1:70, residual, pch = 19, col = "navy", 
+     xlab = "", ylab = "",
+     ylim=c(-15, 15),
+     main = "Ideal Residual Plot")
+abline(h=1, col= "blue")
+```
+
+
+```{r}
+#Question 2
+library(kableExtra)
+myield_1_ = read.csv("https://users.stat.ufl.edu/~winner/data/myield.csv", header = TRUE)
+
+NewUnit <- myield_1_$X1
+AverageMortgage <- myield_1_$X3
+parametric.model <- lm(AverageMortgage ~ NewUnit)
+par(mfrow = c(2,2))
+plot(parametric.model)
+
+reg.table <- coef(summary(parametric.model))
+kable(reg.table, caption = "Inferential statistics for the parametric linear
+      regression model: New Units Built vs  Mortgage Ratio")
+```
+
+```{r}
+#Question 3
+library(kableExtra)
+vec.id <- 1:length(AverageMortgage)   
+boot.id <- sample(vec.id, length(AverageMortgage), replace = TRUE)  
+boot.AverageMortgage <- AverageMortgage[boot.id]           
+boot.NewUnit <- NewUnit[boot.id] 
+
+B <- 1000    
+boot.beta0 <- NULL 
+boot.beta1 <- NULL
+vec.id <- 1:length(AverageMortgage)   
+for(i in 1:B){
+  boot.id <- sample(vec.id, length(AverageMortgage), replace = TRUE)  
+  boot.AverageMortgage <- AverageMortgage[boot.id]           
+  boot.NewUnit <- NewUnit[boot.id]     
+  boot.reg <-lm(AverageMortgage[boot.id] ~ NewUnit[boot.id]) 
+  boot.beta0[i] <- coef(boot.reg)[1]   
+  boot.beta1[i] <- coef(boot.reg)[2]   
+}
+boot.beta0.ci <- quantile(boot.beta0, c(0.025, 0.975), type = 2)
+boot.beta1.ci <- quantile(boot.beta1, c(0.025, 0.975), type = 2)
+boot.coef <- data.frame(rbind(boot.beta0.ci, boot.beta1.ci)) 
+names(boot.coef) <- c("2.5%", "97.5%")
+kable(boot.coef, caption="Bootstrap confidence intervals of regression coefficients.")
+
+#Question 4
+# The linear regression model creates a p-value of 0.0255174 while the bootstrap method creates a 95% confidence interval of (-28.23731	-0.5261138)
+#With a relatively small sample size, and the p-value being less than 0.05, reporting the p-values would be more appropriate.
+
+
+```
+
+

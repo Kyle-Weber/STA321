@@ -21,7 +21,7 @@ protein = read.csv("https://raw.githubusercontent.com/pengdsci/sta321/main/ww02/
 var.name = names(protein)
 kable(data.frame(var.name))
 
-#Question 2: the variable that I will be using for this assignment is Spices. Spces make up a fairly small percentage of the amount of protein intake from different countries
+#Question 2: the variable that I will be using for this assignment is Spices. Spices make up a fairly small percentage of the amount of protein intake from different countries
 
 ```
 
@@ -66,4 +66,10 @@ hist(bt.sample.mean.vec,
 
 
 ```
+
+
+```{r}
+realestate <- read.csv("https://raw.githubusercontent.com/pengdsci/sta321/main/ww03/w03-Realestate.csv", header = TRUE)
+```
+
 
